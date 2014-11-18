@@ -754,6 +754,59 @@ describe('parser', function () {
 
             parser.write(orig).close();
         });
+
+        // it('should handle nested tags within conditionals as part of attributes', function (next) {
+        //     var orig, chunks, tags, expected;
+
+        //     chunks = [];
+        //     tags = [];
+
+        //     expected = [{
+        //         name: 'if',
+        //         attributes: {
+        //             'cond': 'true',
+        //             'if': '{@if cond="false"}execute true result{:else}execute false result{/if}',
+        //             'else': '{?variable}execute the second true statement{:else}execute the second false statement{/variable}'
+        //         }
+        //     },
+        //     {
+        //         name: '?',
+        //         attributes: {
+        //             'cond': 'variableName',
+        //             'if': '{?secondVariableName}execute this when true{:else}execute this when false{/secondVariableName}',
+        //             'else': '{?variableName}and execute this when true{:else}and this when false{/variableName}'
+        //         }
+        //     }];
+
+        //     orig = '{@if cond="true"}{@if cond="false"}execute true result{:else}execute false result{/if}';
+        //     orig += '{:else}{?variable}execute the second true statement{:else}execute the second false statement{/variable}{/if}';
+        //     orig += 'Here is some text';
+        //     orig += '{?variableName}{?secondVariableName}execute this when true{:else}execute this when false{/secondVariableName}';
+        //     orig += '{:else}{?variableName}andexecute this when true{:else}and this when false{/variableName}{/variableName}';
+        //     orig += 'Here is some more text';
+
+        //     parser.on('text', function (chunk) {
+        //         chunks.push(chunk);
+        //     });
+
+        //     parser.on('tag', function (def) {
+        //         tags.push(def);
+        //     });
+
+        //     parser.once('end', function () {
+        //         assert.strictEqual(chunks.length, 2);
+        //         assert.strictEqual(chunks[0], 'Here is some text');
+        //         assert.strictEqual(chunks[1], 'Here is some more text');
+
+        //         assert.strictEqual(tags.length, 2);
+        //         assert.deepEqual(tags[0], expected[0]);
+        //         assert.deepEqual(tags[1], expected[1]);
+        //         next();
+        //     });
+
+        //     parser.write(orig).close();
+
+        // });
     });
 
 
