@@ -60,6 +60,24 @@ describe('API', function () {
             });
         });
 
+        it('should parse a string just like a file', function (next) {
+            var handler = {
+                tags: 'pre, helper',
+
+                onTag: function (def, callback) {
+                    callback(null, def.name);
+                }
+            };
+
+            var stringToParse = '<p>{@pre type="content" key="missing.value" /}</p><p>{@helper attr="value"/} {randomData}</p><p>{@pre type="content" key="missing.otherValue"/}</p><p>{@pre type="content" key="missing.content"/}</p>';
+
+            finder.parseString(stringToParse, handler, function (err, result) {
+                assert.ok(!err);
+                assert.strictEqual(result, '<p>pre</p><p>helper {randomData}</p><p>pre</p><p>pre</p>');
+                next();
+            });
+        });
+
     });
 
 

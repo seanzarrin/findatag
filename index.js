@@ -20,7 +20,8 @@
 'use strict';
 
 var fs = require('fs'),
-    ParseStream = require('./lib/parseStream');
+    ParseStream = require('./lib/parseStream'),
+    stream = require('stream');
 
 
 module.exports = {
@@ -54,6 +55,25 @@ module.exports = {
 
         // Start processing
         readStream.pipe(parseStream);
+    },
+
+    parseString: function (string, entityHandler, callback) {
+        var parseStream = this.createParseStream(entityHandler),
+            chunks = [];
+        
+        parseStream.on('error', callback);
+
+        parseStream.on('data', function (chunk) {
+            chunks.push(chunk);
+        });
+
+        parseStream.on('finish', function () {
+            callback(null, Buffer.concat(chunks).toString('utf8'));
+        });
+
+        parseStream.write(string, 'utf8', function(){
+            parseStream.end();
+        });
     }
 
 };
